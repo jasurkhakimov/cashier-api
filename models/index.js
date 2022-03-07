@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 const db = [];
 
 db.Branch = require('./Branch')(mongoose);
+db.UserType = require('./UserType')(mongoose);
 
 console.log(db);
 
