@@ -8,6 +8,14 @@ module.exports = (mongoose) => {
         name: {
             type: String,
             required: true
+        },
+        datefrom: {
+            type: Date,
+            default: Date.now()
+        },
+        dateto: {
+            type: Date,
+            default: Date.now()
         }
     });
 
