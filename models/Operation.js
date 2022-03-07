@@ -4,6 +4,10 @@ module.exports = (mongoose) => {
         name: {
             type: String,
             required: true
+        },
+        type: {
+            type: mongoose.Types.ObjectId,
+            required: true
         }
     });
 
