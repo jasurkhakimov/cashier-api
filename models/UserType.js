@@ -1,6 +1,11 @@
 const objectClass = require('../classes/userTypes');
 module.exports = (mongoose) => {
     const schema = new mongoose.Schema({
+        ID: {
+            type: Number,
+            unique: true,
+            required: true
+        },
         name: {
             type: String,
             required: true
