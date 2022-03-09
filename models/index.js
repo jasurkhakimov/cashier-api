@@ -20,6 +20,7 @@ db.Operation = require('./Operation')(mongoose);
 db.OperationType = require('./OperationType')(mongoose);
 db.ClientType = require('./ClientType')(mongoose);
 db.PaymentType = require('./PaymentType')(mongoose);
+db.Currency = require('./Currency')(mongoose);
 
 console.log(db);
 
