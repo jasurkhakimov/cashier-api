@@ -18,6 +18,7 @@ db.Branch = require('./Branch')(mongoose);
 db.UserType = require('./UserType')(mongoose);
 db.Operation = require('./Operation')(mongoose);
 db.OperationType = require('./OperationType')(mongoose);
+db.ClientType = require('./ClientType')(mongoose);
 
 console.log(db);
 
