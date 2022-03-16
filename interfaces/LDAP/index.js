@@ -2,9 +2,10 @@ const {
     ldap
 } = require('../../conf');
 const ldapjs = require('ldapjs');
-const {
-    authErrorMSG
-} = require('../../components/responseForm')
+// const {
+//     authErrorMSG,
+//     successMSG
+// } = require('../../components/responseForm')
 
 class LDAP {
 
@@ -27,7 +28,7 @@ class LDAP {
             var filterString = '(&(objectClass=user)(|(userPrincipalName=' + this.login + ')(sAMAccountName=' + this.login + ')))';
             client.bind(this.login, this.password, (err) => {
                 if (err) {
-                    resolve(authErrorMSG(err));
+                    reject(err);
                 } else {
                     const opts = {
                         filter: filterString,
@@ -42,15 +43,13 @@ class LDAP {
                             searchResult.push(entry.object)
                         });
                         res.on('error', (err) => {
-                            resolve(authErrorMSG(err))
+                            reject(err)
                         });
                         res.on('end', (result) => {
-                            console.log('status: ' + result.status);
-                            resolve(successMsg(searchResult))
+                            resolve(searchResult)
                             client.unbind(err => {
                                 if (err) {
-                                    console.log(err);
-                                    authErrorMSG(err)
+                                    reject(err)
                                 }
                             })
                         });

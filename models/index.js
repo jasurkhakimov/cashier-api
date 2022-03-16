@@ -21,6 +21,7 @@ db.OperationType = require('./OperationType')(mongoose);
 db.ClientType = require('./ClientType')(mongoose);
 db.PaymentType = require('./PaymentType')(mongoose);
 db.Currency = require('./Currency')(mongoose);
+db.User = require('./User')(mongoose);
 
 console.log(db);
 
