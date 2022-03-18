@@ -7,6 +7,6 @@ router.use('/operationTypes', require('./operationTypeRoute'))
 router.use('/clientTypes', require('./clientTypeRoute'))
 router.use('/paymentTypes', require('./paymentTypeRoute'))
 router.use('/currencies', require('./currencyRoute'))
-router.use('/users', require('./userAuthRoute'))
+router.use('/users', require('./userRoute'))
 
 module.exports = router
