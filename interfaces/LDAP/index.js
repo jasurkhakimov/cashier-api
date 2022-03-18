@@ -46,12 +46,13 @@ class LDAP {
                             reject(err)
                         });
                         res.on('end', (result) => {
+                            client.unbind()
+                            // client.unbind(err => {
+                            //     if (err) {
+                            //         reject(err)
+                            //     }
+                            // })
                             resolve(searchResult)
-                            client.unbind(err => {
-                                if (err) {
-                                    reject(err)
-                                }
-                            })
                         });
                     });
                 }
