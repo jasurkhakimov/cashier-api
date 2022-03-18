@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken')
 const {
     tokensecret
 } = require('../conf')
+const {
+    set
+} = require('../interfaces/redis')
 class User {
     static addItem(obj) {
         return new Promise((resolve, reject) => {
@@ -28,13 +31,17 @@ class User {
                     }, {
                         account: sAMAccountName
                     }]
-                }, '_id fio branch type email account').then(user => {
+                }, '_id fio branch type email account').then(async user => {
                     if (user) {
                         user.token = jwt.sign({
                             email: user.email,
                             name: user.fio
                         }, tokensecret.length ? tokensecret : 'tokensecret');
-                        resolve(user)
+                        await set('authToken:' + user._id, user.token).then(() => {
+                            resolve(user)
+                        }).catch(err => {
+                            reject(err)
+                        })
                     } else {
                         reject('User cannot be found!')
                     }
