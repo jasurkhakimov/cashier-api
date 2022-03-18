@@ -1,8 +1,12 @@
 const LDAP = require('../interfaces/LDAP')
 class User {
-    static addItem() {
+    static addItem(obj) {
         return new Promise((resolve, reject) => {
-            resolve(1)
+            this.create(obj).then(user => {
+                resolve(user)
+            }).catch(err => {
+                reject(err)
+            })
         })
     }
 
@@ -10,7 +14,21 @@ class User {
         const ldap = new LDAP(obj);
         return new Promise((resolve, reject) => {
             ldap.authorize().then(data => {
-                resolve(data)
+                this.findOne({
+                    $or: [{
+                        email: data.mail
+                    }, {
+                        account: data.sAMAccountName
+                    }]
+                }).then(user => {
+                    if (user) {
+                        resolve(user)
+                    } else {
+                        reject('User cannot be found!')
+                    }
+                }).catch(err => {
+                    reject(err)
+                })
             }).catch(err => {
                 reject(err)
             })
