@@ -1,4 +1,8 @@
 const LDAP = require('../interfaces/LDAP')
+const jwt = require('jsonwebtoken')
+const {
+    tokensecret
+} = require('../conf')
 class User {
     static addItem(obj) {
         return new Promise((resolve, reject) => {
@@ -14,14 +18,22 @@ class User {
         const ldap = new LDAP(obj);
         return new Promise((resolve, reject) => {
             ldap.authorize().then(data => {
+                var {
+                    sAMAccountName,
+                    mail
+                } = data[0]
                 this.findOne({
                     $or: [{
-                        email: data.mail
+                        email: mail
                     }, {
-                        account: data.sAMAccountName
+                        account: sAMAccountName
                     }]
-                }).then(user => {
+                }, '_id fio branch type email account').then(user => {
                     if (user) {
+                        user.token = jwt.sign({
+                            email: user.email,
+                            name: user.fio
+                        }, tokensecret.length ? tokensecret : 'tokensecret');
                         resolve(user)
                     } else {
                         reject('User cannot be found!')

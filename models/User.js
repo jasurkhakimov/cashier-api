@@ -49,6 +49,7 @@ module.exports = (mongoose) => {
             type: String,
             required: true
         },
+        token: String,
         createdAt: {
             type: Date,
             default: Date.now()
